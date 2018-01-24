@@ -54,6 +54,116 @@ class Atr_Categories_Manager_Public {
 
 	}
 
+	public function atr_cm_list( $content ) {
+		if( current_user_can( 'administrator' ) ) {
+	  $taxonomy     = 'product_cat';
+	  $orderby      = 'name';  
+	  $show_count   = 0;      // 1 for yes, 0 for no
+	  $pad_counts   = 0;      // 1 for yes, 0 for no
+	  $hierarchical = 1;      // 1 for yes, 0 for no  
+	  $title        = '';  
+	  $empty        = 0;
+
+	  $args = array(
+			 'taxonomy'     => $taxonomy,
+			 'orderby'      => $orderby,
+			 'show_count'   => $show_count,
+			 'pad_counts'   => $pad_counts,
+			 'hierarchical' => $hierarchical,
+			 'title_li'     => $title,
+			 'hide_empty'   => $empty
+	  );
+	 $all_categories = get_categories( $args );
+	 echo '<ul>';
+	 foreach ($all_categories as $cat) {
+		if($cat->category_parent == 0) {
+			$category_id = $cat->term_id;       
+			echo '<li><a href="'. get_term_link($cat->slug, 'product_cat') .'">'. $cat->name .'</a> Cat id = ' . $category_id;
+
+			$args2 = array(
+					'taxonomy'     => $taxonomy,
+					'child_of'     => 0,
+					'parent'       => $category_id,
+					'orderby'      => $orderby,
+					'show_count'   => $show_count,
+					'pad_counts'   => $pad_counts,
+					'hierarchical' => $hierarchical,
+					'title_li'     => $title,
+					'hide_empty'   => $empty
+			);
+			$sub1_cats = get_categories( $args2 );
+			if($sub1_cats) {
+				echo '<ul>';
+				foreach($sub1_cats as $sub1_category) {
+					echo  '<li>' . $sub1_category->name . ' Cat id = ' . $sub1_category->term_id;
+						$args3 = array(
+								'taxonomy'     => $taxonomy,
+								'child_of'     => 0,
+								'parent'       => $sub1_category->term_id,
+								'orderby'      => $orderby,
+								'show_count'   => $show_count,
+								'pad_counts'   => $pad_counts,
+								'hierarchical' => $hierarchical,
+								'title_li'     => $title,
+								'hide_empty'   => $empty
+						);
+						$sub2_cats = get_categories( $args3 );
+						echo '<ul>';
+						foreach($sub2_cats as $sub2_category) {						
+							echo  '<li>' . $sub2_category->name . ' Cat id = ' . $sub2_category->term_id;
+								$args4 = array(
+										'taxonomy'     => $taxonomy,
+										'child_of'     => 0,
+										'parent'       => $sub2_category->term_id,
+										'orderby'      => $orderby,
+										'show_count'   => $show_count,
+										'pad_counts'   => $pad_counts,
+										'hierarchical' => $hierarchical,
+										'title_li'     => $title,
+										'hide_empty'   => $empty
+								);
+								$sub3_cats = get_categories( $args4 );
+								echo '<ul>';
+								foreach($sub3_cats as $sub3_category) {
+									echo  '<li>' . $sub3_category->name . ' Cat id = ' . $sub3_category->term_id;
+										$args5 = array(
+												'taxonomy'     => $taxonomy,
+												'child_of'     => 0,
+												'parent'       => $sub3_category->term_id,
+												'orderby'      => $orderby,
+												'show_count'   => $show_count,
+												'pad_counts'   => $pad_counts,
+												'hierarchical' => $hierarchical,
+												'title_li'     => $title,
+												'hide_empty'   => $empty
+										);
+										$sub4_cats = get_categories( $args5 );	
+										echo '<ul>';
+											foreach($sub4_cats as $sub4_category) {
+												echo  '<li>' . $sub4_category->name . ' Cat id = ' . $sub4_category->term_id . '</li>' ;
+											}
+										echo '</ul>';
+									echo '</li>';
+								}
+								echo '</ul>';
+							echo '</li>';
+						}
+						echo '</ul>';
+					echo '</li>';
+				};
+				echo '</ul>';
+			}
+		}       
+		echo '</li>';
+		}
+	echo '</ul>';
+			
+			
+
+		}
+	}
+
+	
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *

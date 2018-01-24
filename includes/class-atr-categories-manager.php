@@ -67,8 +67,8 @@ class Atr_Categories_Manager {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
+		if ( defined( 'ATR_CATEGORIES_MANAGER_VERSION' ) ) {
+			$this->version = ATR_CATEGORIES_MANAGER_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
@@ -173,7 +173,7 @@ class Atr_Categories_Manager {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		
-		$this->loader->add_action( 'the_content', $plugin_public, 'atr_cm_list' );
+		$this->loader->add_action( 'template_redirect', $plugin_public, 'render_atr_cm_list' );
 
 	}
 

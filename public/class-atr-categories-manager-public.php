@@ -53,6 +53,15 @@ class Atr_Categories_Manager_Public {
 		$this->version = $version;
 
 	}
+
+	public function render_atr_cm_list( $content){
+		if(is_single( '1' )) {
+			add_filter('the_content', array( $this, 'filter_content'));
+		}
+	}
+	public function filter_content(){
+		echo $this->atr_cm_list();
+	}
 	
 	/**
 	 * Loop through categories and display a hierarchical list with names and IDs
@@ -60,8 +69,8 @@ class Atr_Categories_Manager_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function atr_cm_list( $content ) {
-		if( current_user_can( 'administrator' ) ) {
+	public function atr_cm_list(  ) {
+	  if( current_user_can( 'administrator' ) ) {
 	  $taxonomy     = 'product_cat';
 	  $orderby      = 'name';  
 	  $show_count   = 0;      // 1 for yes, 0 for no
@@ -81,10 +90,10 @@ class Atr_Categories_Manager_Public {
 	  );
 	 $all_categories = get_categories( $args0 );
 	 echo '<ul>';
-	 foreach ($all_categories as $cat) {
-		if($cat->category_parent == 0) {
-			$category_id = $cat->term_id;       
-			echo '<li><a href="'. get_term_link($cat->slug, 'product_cat') .'">'. $cat->name .'</a> Cat id = ' . $category_id;
+	 foreach ($all_categories as $sub0_category) {
+		if($sub0_category->category_parent == 0) {
+			$category_id = $sub0_category->term_id;       
+			echo '<li><a href="'. get_term_link($sub0_category->slug, 'product_cat') .'">' . $sub0_category->name .'</a> Cat id = ' . $category_id;
 
 			$args1 = array(
 					'taxonomy'     => $taxonomy,
@@ -101,7 +110,7 @@ class Atr_Categories_Manager_Public {
 			if($sub1_cats) {
 				echo '<ul>';
 				foreach($sub1_cats as $sub1_category) {
-					echo  '<li>' . $sub1_category->name . ' Cat id = ' . $sub1_category->term_id;
+					echo  '<li>' . $sub1_category->name . ' Cat id = (' . $sub1_category->term_id. ') suggested SKU:' . $sub0_category->term_id . '-' . $sub1_category->term_id;
 						$args2 = array(
 								'taxonomy'     => $taxonomy,
 								'child_of'     => 0,
@@ -116,7 +125,7 @@ class Atr_Categories_Manager_Public {
 						$sub2_cats = get_categories( $args2 );
 						echo '<ul>';
 						foreach($sub2_cats as $sub2_category) {						
-							echo  '<li>' . $sub2_category->name . ' (Cat id = ' . $sub2_category->term_id . ') suggested SKU:' . $sub1_category->term_id . '-' . $sub2_category->term_id;
+							echo  '<li>' . $sub2_category->name . ' (Cat id = ' . $sub2_category->term_id . ') suggested SKU:' . $sub0_category->term_id . '-' . $sub1_category->term_id . '-' . $sub2_category->term_id;
 								$args3 = array(
 										'taxonomy'     => $taxonomy,
 										'child_of'     => 0,
@@ -131,7 +140,7 @@ class Atr_Categories_Manager_Public {
 								$sub3_cats = get_categories( $args3 );
 								echo '<ul>';
 								foreach($sub3_cats as $sub3_category) {
-									echo  '<li>' . $sub3_category->name . ' (Cat id = ' . $sub3_category->term_id . ') suggested SKU:' . $sub1_category->term_id . '-' . $sub2_category->term_id . '-' . $sub3_category->term_id;
+									echo  '<li>' . $sub3_category->name . ' (Cat id = ' . $sub3_category->term_id . ') suggested SKU:' . $sub0_category->term_id . '-' . $sub1_category->term_id . '-' . $sub2_category->term_id . '-' . $sub3_category->term_id;
 										$args4 = array(
 												'taxonomy'     => $taxonomy,
 												'child_of'     => 0,
@@ -146,7 +155,7 @@ class Atr_Categories_Manager_Public {
 										$sub4_cats = get_categories( $args4 );	
 										echo '<ul>';
 											foreach($sub4_cats as $sub4_category) {
-												echo  '<li>' . $sub4_category->name . ' (Cat id = ' . $sub4_category->term_id . ') suggested SKU:' . $sub1_category->term_id . '-' . $sub2_category->term_id . '-' . $sub3_category->term_id  . '-' . $sub4_category->term_id . '</li>' ;
+												echo  '<li>' . $sub4_category->name . ' (Cat id = ' . $sub4_category->term_id . ') suggested SKU:' . $sub0_category->term_id . '-' . $sub1_category->term_id . '-' . $sub2_category->term_id . '-' . $sub3_category->term_id  . '-' . $sub4_category->term_id . '</li>' ;
 											}
 										echo '</ul>';
 									echo '</li>';

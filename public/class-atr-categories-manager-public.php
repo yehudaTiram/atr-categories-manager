@@ -53,7 +53,13 @@ class Atr_Categories_Manager_Public {
 		$this->version = $version;
 
 	}
-
+	
+	/**
+	 * Loop through categories and display a hierarchical list with names and IDs
+	 * the main loop code from https://stackoverflow.com/questions/21009516/get-categories-from-wordpress-woocommerce
+	 *
+	 * @since    1.0.0
+	 */
 	public function atr_cm_list( $content ) {
 		if( current_user_can( 'administrator' ) ) {
 	  $taxonomy     = 'product_cat';

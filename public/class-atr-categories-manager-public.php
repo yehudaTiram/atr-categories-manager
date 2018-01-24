@@ -89,11 +89,11 @@ class Atr_Categories_Manager_Public {
 			 'hide_empty'   => $empty
 	  );
 	 $all_categories = get_categories( $args0 );
-	 echo '<ul>';
+	 echo '<div class="atr-cm-wrap"><ul>';
 	 foreach ($all_categories as $sub0_category) {
 		if($sub0_category->category_parent == 0) {
 			$category_id = $sub0_category->term_id;       
-			echo '<li><a href="'. get_term_link($sub0_category->slug, 'product_cat') .'">' . $sub0_category->name .'</a> Cat id = ' . $category_id;
+			echo '<li class="atr-cm-sub0_category"><a href="'. get_term_link($sub0_category->slug, 'product_cat') .'">' . $sub0_category->name .'</a> Cat id = <span class="atr-cm-sub0-cat-id atr-cm-sub-cat-id">(' . $category_id . ')</span> suggested SKU:<span class="atr-cm-sub0-sku atr-cm-sub-sku">' . $category_id . '</span>';
 
 			$args1 = array(
 					'taxonomy'     => $taxonomy,
@@ -110,7 +110,7 @@ class Atr_Categories_Manager_Public {
 			if($sub1_cats) {
 				echo '<ul>';
 				foreach($sub1_cats as $sub1_category) {
-					echo  '<li>' . $sub1_category->name . ' Cat id = (' . $sub1_category->term_id. ') suggested SKU:' . $sub0_category->term_id . '-' . $sub1_category->term_id;
+					echo  '<li class="atr-cm-sub1_category">' . $sub1_category->name . ' Cat id = <span class="atr-cm-sub1-cat-id atr-cm-sub-cat-id">(' . $sub1_category->term_id. ') </span>suggested SKU:<span class="atr-cm-sub1-sku atr-cm-sub-sku">' . $sub0_category->term_id . '-' . $sub1_category->term_id . '</span>';
 						$args2 = array(
 								'taxonomy'     => $taxonomy,
 								'child_of'     => 0,
@@ -125,7 +125,7 @@ class Atr_Categories_Manager_Public {
 						$sub2_cats = get_categories( $args2 );
 						echo '<ul>';
 						foreach($sub2_cats as $sub2_category) {						
-							echo  '<li>' . $sub2_category->name . ' (Cat id = ' . $sub2_category->term_id . ') suggested SKU:' . $sub0_category->term_id . '-' . $sub1_category->term_id . '-' . $sub2_category->term_id;
+							echo  '<li class="atr-cm-sub2_category">' . $sub2_category->name . ' <span class="atr-cm-sub2-cat-id atr-cm-sub-cat-id">(Cat id = ' . $sub2_category->term_id . ') </span> suggested SKU:<span class="atr-cm-sub2-sku atr-cm-sub-sku">' . $sub0_category->term_id . '-' . $sub1_category->term_id . '-' . $sub2_category->term_id . '</span>';
 								$args3 = array(
 										'taxonomy'     => $taxonomy,
 										'child_of'     => 0,
@@ -140,7 +140,7 @@ class Atr_Categories_Manager_Public {
 								$sub3_cats = get_categories( $args3 );
 								echo '<ul>';
 								foreach($sub3_cats as $sub3_category) {
-									echo  '<li>' . $sub3_category->name . ' (Cat id = ' . $sub3_category->term_id . ') suggested SKU:' . $sub0_category->term_id . '-' . $sub1_category->term_id . '-' . $sub2_category->term_id . '-' . $sub3_category->term_id;
+									echo  '<li class="atr-cm-sub3_category">' . $sub3_category->name . ' <span class="atr-cm-sub3-cat-id atr-cm-sub-cat-id">(Cat id = ' . $sub3_category->term_id . ') </span> suggested SKU:<span class="atr-cm-sub3-sku atr-cm-sub-sku">' . $sub0_category->term_id . '-' . $sub1_category->term_id . '-' . $sub2_category->term_id . '-' . $sub3_category->term_id . '</span>';
 										$args4 = array(
 												'taxonomy'     => $taxonomy,
 												'child_of'     => 0,
@@ -155,7 +155,7 @@ class Atr_Categories_Manager_Public {
 										$sub4_cats = get_categories( $args4 );	
 										echo '<ul>';
 											foreach($sub4_cats as $sub4_category) {
-												echo  '<li>' . $sub4_category->name . ' (Cat id = ' . $sub4_category->term_id . ') suggested SKU:' . $sub0_category->term_id . '-' . $sub1_category->term_id . '-' . $sub2_category->term_id . '-' . $sub3_category->term_id  . '-' . $sub4_category->term_id . '</li>' ;
+												echo  '<li class="atr-cm-sub4_category">' . $sub4_category->name . ' <span class="atr-cm-sub2-cat-id atr-cm-sub-cat-id">(Cat id = ' . $sub4_category->term_id . ') </span> suggested SKU<span class="atr-cm-sub4-sku atr-cm-sub-sku">:' . $sub0_category->term_id . '-' . $sub1_category->term_id . '-' . $sub2_category->term_id . '-' . $sub3_category->term_id  . '-' . $sub4_category->term_id . '</span></li>' ;
 											}
 										echo '</ul>';
 									echo '</li>';
@@ -171,7 +171,7 @@ class Atr_Categories_Manager_Public {
 		}       
 		echo '</li>';
 		}
-	echo '</ul>';
+	echo '</ul></div>';
 			
 			
 

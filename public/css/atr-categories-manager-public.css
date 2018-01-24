@@ -1,4 +1,11 @@
-/**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
+.atr-cm-wrap{
+	background: #fff;
+}
+span.atr-cm-sub-cat-id {
+    font-weight: 700;
+    color: red;
+}
+span.atr-cm-sub-sku {
+    font-weight: 700;
+    color: #84d3e0;
+}

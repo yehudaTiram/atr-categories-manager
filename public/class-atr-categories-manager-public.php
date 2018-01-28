@@ -55,7 +55,7 @@ class Atr_Categories_Manager_Public {
 	}
 
 	public function render_atr_cm_list( $content){
-		if(is_single( '1' )) {
+		if(is_single( '1' )) { // show it in post id = 1 #TODO Set as settings option
 			add_filter('the_content', array( $this, 'filter_content'));
 		}
 	}
@@ -199,6 +199,7 @@ class Atr_Categories_Manager_Public {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/atr-categories-manager-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'jstree_css', plugin_dir_url( __FILE__ ) . 'js/jstree/themes/default/style.css', array(), $this->version, 'all' );
 
 	}
 
@@ -222,6 +223,7 @@ class Atr_Categories_Manager_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/atr-categories-manager-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . 'jstree_js', plugin_dir_url( __FILE__ ) . 'js/jstree/jstree.min.js', array( 'jquery' ), $this->version, false );
 
 	}
 

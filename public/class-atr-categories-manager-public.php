@@ -93,7 +93,7 @@ class Atr_Categories_Manager_Public {
 	 foreach ($all_categories as $sub0_category) {
 		if($sub0_category->category_parent == 0) {
 			$category_id = $sub0_category->term_id;       
-			echo '<li class="atr-cm-sub0_category"><a href="'. get_term_link($sub0_category->slug, 'product_cat') .'">' . $sub0_category->name .'</a> Cat id = <span class="atr-cm-sub0-cat-id atr-cm-sub-cat-id">(' . $category_id . ')</span> suggested SKU:<span class="atr-cm-sub0-sku atr-cm-sub-sku">' . $category_id . '</span>';
+			echo '<li class="atr-cm-sub0_category"><a href="'. get_term_link($sub0_category->slug, 'product_cat') .'">' . $sub0_category->name . ' Cat id = <span class="atr-cm-sub1-cat-id atr-cm-sub-cat-id">(' . $sub0_category->term_id. ') </span>suggested SKU:<span class="atr-cm-sub1-sku atr-cm-sub-sku">' . $sub0_category->term_id . '</span>' .'</a> </span>';
 
 			$args1 = array(
 					'taxonomy'     => $taxonomy,

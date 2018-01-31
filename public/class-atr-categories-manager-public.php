@@ -89,6 +89,11 @@ class Atr_Categories_Manager_Public {
 			 'hide_empty'   => $empty
 	  );
 	 $all_categories = get_categories( $args0 );
+	 ?>
+	 <div class="input-group"><input type="text" class="form-control" placeholder="Search node .." id="search"><span class="input-group-btn"><button class="btn btn-default" type="button" id="btn-search">Go!</button></span></div>
+	<input type="button" value="Collapse All" onclick="jQuery('.atr-cm-wrap').jstree('close_all');">
+	<input type="button" value="Expand All" onclick="jQuery('.atr-cm-wrap').jstree('open_all');">	 
+	 <?php
 	 echo '<div class="atr-cm-wrap"><ul>';
 	 foreach ($all_categories as $sub0_category) {
 		if($sub0_category->category_parent == 0) {

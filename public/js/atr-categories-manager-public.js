@@ -16,7 +16,12 @@
 			  return true; // allow everything else
 			}
 		  },
-		  "plugins" : ["dnd","contextmenu"]
+		  "search": {
+			 "case_insensitive": true,
+			 "show_only_matches" : false
+			},		  
+		  "plugins" : ["dnd","contextmenu", "search"]
+
 		});		
 	});	
 

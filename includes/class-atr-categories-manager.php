@@ -174,6 +174,8 @@ class Atr_Categories_Manager {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		
 		$this->loader->add_action( 'template_redirect', $plugin_public, 'render_atr_cm_list' );
+		
+		$this->loader->add_shortcode( "atr_cm_tree", $plugin_public, "atr_cm_list_sc", $priority = 10, $accepted_args = 2 );
 
 	}
 

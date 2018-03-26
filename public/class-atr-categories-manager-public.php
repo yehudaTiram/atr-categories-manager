@@ -182,6 +182,35 @@ class Atr_Categories_Manager_Public {
 
 		}
 	}
+	
+	/**
+	 * Shortcode that renders the categories tree.
+	 *
+	 * @since    1.0.0
+	 */
+	public function atr_cm_list_sc( $atts ) {
+		$a = shortcode_atts( array(
+			'imageslider-id'			=> 'imageslider',
+			'imageslider-class'			=> 'imageslider',
+			'slide-item-class'			=> 'imageslider-item',
+			'slider-container-id'		=> 'products-slider',
+			'slider-container-class'	=> 'content-slider',
+			'slide-distance' 			=> '1',
+			'slide-duration' 			=> '1',
+			'resizeable'				=> 'true',
+			'pause'						=> 'true',
+			'reverse'					=> 'false',
+			'post-type'					=> 'post',
+			'posts-per-page'			=> '10',
+			'taxonomy'					=> 'category',
+			'terms'						=> 'uncategorized'
+			
+		), $atts );		
+	
+		echo $this->atr_cm_list();
+		//return "foo = {$a['foo']}";
+	}
+	
 
 	
 	/**

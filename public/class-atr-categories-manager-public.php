@@ -54,14 +54,14 @@ class Atr_Categories_Manager_Public {
 
 	}
 
-	public function render_atr_cm_list( $content){
-		if(is_single( '1' )) { // show it in post id = 1 #TODO Set as settings option
-			add_filter('the_content', array( $this, 'filter_content'));
-		}
-	}
-	public function filter_content(){
-		echo $this->atr_cm_list();
-	}
+	// public function render_atr_cm_list( $content){
+		// if(is_single( '1' )) { // show it in post id = 1 #TODO Set as settings option
+			// add_filter('the_content', array( $this, 'filter_content'));
+		// }
+	// }
+	// public function filter_content(){
+		// echo $this->atr_cm_list();
+	// }
 	
 	/**
 	 * Loop through categories and display a hierarchical list with names and IDs
@@ -69,7 +69,51 @@ class Atr_Categories_Manager_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function atr_cm_list(  ) {
+	 
+    //atr_cm_list( 0 ); // the function call; 0 for all categories; or cat ID  
+
+	public function atr_cm_list( $cat, $suggested_sku ) {
+		
+	  $taxonomy     = 'product_cat';
+	  $orderby      = 'name';  
+	  $show_count   = 0;      // 1 for yes, 0 for no
+	  $pad_counts   = 0;      // 1 for yes, 0 for no
+	  $hierarchical = 1;      // 1 for yes, 0 for no  
+	  $title        = '';  
+	  $empty        = 0;
+
+	  $args = array(
+			 'taxonomy'     => $taxonomy,
+			 'orderby'      => $orderby,
+			 'show_count'   => $show_count,
+			 'pad_counts'   => $pad_counts,
+			 'hierarchical' => $hierarchical,
+			 'title_li'     => $title,
+			 'hide_empty'   => $empty,
+			 'parent'		=> $cat
+	  );
+
+	  $next = get_categories( $args );
+
+	  if( $next ) :    
+		foreach( $next as $cat ) :
+		$suggested_sku .= '-';
+		$suggested_sku .= $cat->term_id;
+		echo '<ul>';
+		echo '<li class="atr-cm-sub0_category"><a href="'. $cat->slug .'">' . $cat->name . ' Cat id = <span class="atr-cm-sub1-cat-id atr-cm-sub-cat-id">(' . $cat->term_id. ') </span>suggested SKU:<span class="atr-cm-sub1-sku atr-cm-sub-sku">' . $suggested_sku . '</span>' .'</a> </span>';
+		echo ' / <a href="' . get_category_link( $cat->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $cat->name ) . '" ' . '>View ( '. $cat->count . ' posts )</a>  '; 
+		echo ' / <a href="'. get_admin_url().'edit-tags.php?action=edit&taxonomy=category&tag_ID='.$cat->term_id.'&post_type=post" title="Edit Category">Edit</a>'; 
+		$this->atr_cm_list( $cat->term_id, $suggested_sku );
+		echo '</li></ul>';
+		endforeach;    
+	  endif;
+
+	  
+	}	
+
+
+	
+	public function atr_cm_list_old(  ) {
 	  if( current_user_can( 'administrator' ) ) {
 	  $taxonomy     = 'product_cat';
 	  $orderby      = 'name';  
@@ -88,7 +132,7 @@ class Atr_Categories_Manager_Public {
 			 'title_li'     => $title,
 			 'hide_empty'   => $empty
 	  );
-	 $all_categories = get_categories( $args0 );
+	 $all_categories = get_categories( $args0 );//var_dump($all_categories);
 	 ?>
 	 <div class="input-group"><input type="text" class="form-control" placeholder="Search node .." id="search"><span class="input-group-btn"><button class="btn btn-default" type="button" id="btn-search">Go!</button></span></div>
 	<input type="button" value="Collapse All" onclick="jQuery('.atr-cm-wrap').jstree('close_all');">
@@ -207,7 +251,15 @@ class Atr_Categories_Manager_Public {
 			
 		), $atts );		
 	
-		echo $this->atr_cm_list();
+		//echo $this->atr_cm_list();
+		?>
+		<div class="input-group"><input type="text" class="form-control" placeholder="Search node .." id="search"><span class="input-group-btn"><button class="btn btn-default" type="button" id="btn-search">Go!</button></span></div>
+		<input type="button" value="Collapse All" onclick="jQuery('.atr-cm-wrap').jstree('close_all');">
+		<input type="button" value="Expand All" onclick="jQuery('.atr-cm-wrap').jstree('open_all');">	 
+		<?php
+		echo '<div class="atr-cm-wrap">';		
+		echo $this->atr_cm_list(0, '');
+		echo '</div>';
 		//return "foo = {$a['foo']}";
 	}
 	

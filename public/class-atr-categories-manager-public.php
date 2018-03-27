@@ -60,7 +60,7 @@ class Atr_Categories_Manager_Public {
 	* @since    1.0.0
 	*/
 
-	public function atr_cm_list( $cat_parent, $suggested_sku, $taxonomy_t ) {
+	public function atr_cm_list( $cat_parent, $suggested_sku, $taxonomy_t, $collapse_all ) {
 		
 		$orderby      = 'name';  
 		$show_count   = 0;      
@@ -104,10 +104,10 @@ class Atr_Categories_Manager_Public {
 			$suggested_sku = $cat->term_id;
 		}
 		echo '<ul>';
-		echo '<li class="atr-cm-sub_category"><a href="'. $cat->slug .'">' . $cat->name . ' Cat id = <span class="atr-cm-sub1-cat-id atr-cm-sub-cat-id">(' . $cat->term_id. ') </span>suggested SKU:<span class="atr-cm-sub1-sku atr-cm-sub-sku">' . $suggested_sku . '</span>' .'</a> </span>';
+		echo '<li  data-jstree=\'{"opened":' . $collapse_all . '}\' class="atr-cm-sub_category"><a href="'. $cat->slug .'">' . $cat->name . ' Cat id = <span class="atr-cm-sub1-cat-id atr-cm-sub-cat-id">(' . $cat->term_id. ') </span>suggested SKU:<span class="suggested-sku atr-cm-sub-sku">' . $suggested_sku . '</span>' .'</a> </span>';
 		echo ' / <a href="' . get_category_link( $cat->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $cat->name ) . '" ' . '>View ( '. $cat->count . ' posts )</a>  '; 
 		echo ' / <a href="'. get_admin_url().'edit-tags.php?action=edit&taxonomy=category&tag_ID='.$cat->term_id.'&post_type=post" title="Edit Category">Edit</a>'; 
-		$this->atr_cm_list( $cat->term_id, $suggested_sku, $taxonomy_t );
+		$this->atr_cm_list( $cat->term_id, $suggested_sku, $taxonomy_t,$collapse_all );
 		echo '</li></ul>';
 		endforeach;    
 		endif;
@@ -131,19 +131,7 @@ class Atr_Categories_Manager_Public {
 		$a = shortcode_atts( array(
 		
 		'taxonomy_t'			=> 'product_cat',
-		'imageslider-class'			=> 'imageslider',
-		'slide-item-class'			=> 'imageslider-item',
-		'slider-container-id'		=> 'products-slider',
-		'slider-container-class'	=> 'content-slider',
-		'slide-distance' 			=> '1',
-		'slide-duration' 			=> '1',
-		'resizeable'				=> 'true',
-		'pause'						=> 'true',
-		'reverse'					=> 'false',
-		'post-type'					=> 'post',
-		'posts-per-page'			=> '10',
-		'taxonomy'					=> 'category',
-		'terms'						=> 'uncategorized'
+		'collapse_all'			=> 'true'
 		
 		), $atts );		
 		
@@ -156,7 +144,7 @@ class Atr_Categories_Manager_Public {
 		<input type="button" value="Expand All" onclick="jQuery('.atr-cm-wrap').jstree('open_all');">	 
 		<?php
 		echo '<div class="atr-cm-wrap">';		
-		echo $this->atr_cm_list(0, '',$a['taxonomy_t']);
+		echo $this->atr_cm_list(0, '',$a['taxonomy_t'],$a['collapse_all']);
 		echo '</div>';
 		//return "foo = {$a['foo']}";
 	}

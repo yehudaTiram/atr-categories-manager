@@ -2,8 +2,10 @@
 	'use strict';
 	//https://github.com/vakata/jstree
 	$( document ).ready(
+		
 		function() {
-			$('.atr-cm-wrap').jstree({
+			var container = $('.atr-cm-wrap');
+			$(container).jstree({
 			  "core" : {
 				"check_callback" : function (operation, node, parent, position, more) {
 				  if(operation === "copy_node" || operation === "move_node") {
@@ -18,11 +20,17 @@
 				 "case_insensitive": true,
 				 "show_only_matches" : false
 				},		  
-			  "plugins" : ["dnd","contextmenu", "search"]
+			  "plugins" : ["contextmenu", "search"]
 			});	
-		  $('.atr-cm-wrap').on("changed.jstree", function (e, core) {
+			$("#s").submit(function(e) {
+			  e.preventDefault();
+			  $(container).jstree(true).search($("#q").val());
+			});			
+		  $(container).on("changed.jstree", function (e, core) {
 			console.log("The selected nodes are:");
 			console.log(core.selected);
+			  console.log(core.instance.get_selected(true)[0].text);
+			  console.log(core.instance.get_node(core.selected[0]).text);			
 		  });			
 		});	
 

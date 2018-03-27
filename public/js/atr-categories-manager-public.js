@@ -28,10 +28,8 @@
 							"copy_sku": {
 								"separator_before": false,
 								"separator_after": false,
-								"label": "Cop suggested SKU",																
+								"label": "Copy suggested SKU",																
 								"action": function action(obj) {
-									// console.log($(node).attr('id'));
-									// console.log($('#' + $(node).attr('id') + '_anchor' + ' .suggested-sku').text());
 								var text= $('#' + $(node).attr('id') + '_anchor' + ' .suggested-sku').text();
 								window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
 								

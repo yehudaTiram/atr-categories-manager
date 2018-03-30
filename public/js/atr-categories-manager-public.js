@@ -12,7 +12,21 @@
 					window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
 					
 					}
-				}
+				},
+				"go_to_category": {
+					"separator_before": false,
+					"separator_after": false,
+					"label": "Go to this category",																
+					"action": function action(obj) {
+								console.log( $('#' + node.id).data( "link" ) );
+								var href = $('#' + node.id).data( "link" ) ;
+								document.location.href = href;
+
+					// var text= $('#' + node.id + '_anchor' + ' .suggested-sku').text();
+					// window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+					
+					}
+				}				
 			}; 
 	}	
 	$( document ).ready(		

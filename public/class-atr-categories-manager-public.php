@@ -105,8 +105,8 @@ class Atr_Categories_Manager_Public {
 		}
 		echo '<ul>';
 		echo '<li  data-jstree=\'{"opened":' . $uncollapse_all . '}\' class="atr-cm-sub_category" data-link="'. get_category_link( $cat->term_id ) .'"><a href="'. get_category_link( $cat->term_id ) .'">' . $cat->name . ' Cat id = <span class="atr-cm-sub1-cat-id atr-cm-sub-cat-id">(' . $cat->term_id. ') </span>suggested SKU:<span class="suggested-sku atr-cm-sub-sku">' . $suggested_sku . '</span>' .'</a> </span>';
-		echo ' / <a href="' . get_category_link( $cat->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $cat->name ) . '" ' . '>View ( '. $cat->count . ' posts )</a>  '; 
-		echo ' / <a href="'. get_admin_url().'edit-tags.php?action=edit&taxonomy=category&tag_ID='.$cat->term_id.'&post_type=post" title="Edit Category">Edit</a>'; 
+		//echo ' / <a href="' . get_category_link( $cat->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $cat->name ) . '" ' . '>View ( '. $cat->count . ' posts )</a>  '; 
+		//echo ' / <a href="'. get_admin_url().'edit-tags.php?action=edit&taxonomy=category&tag_ID='.$cat->term_id.'&post_type=post" title="Edit Category">Edit</a>'; 
 		$this->atr_cm_list( $cat->term_id, $suggested_sku, $taxonomy_t,$uncollapse_all );
 		echo '</li></ul>';
 		endforeach;    

@@ -60,7 +60,7 @@ class Atr_Categories_Manager_Public {
 	* @since    1.0.0
 	*/
 
-	public function atr_cm_list( $cat_parent, $suggested_sku, $taxonomy_t, $uncollapse_all ) {
+	public function atr_cm_list( $cat_parent, $suggested_sku, $taxonomy_t, $post_type_t, $uncollapse_all ) {
 		
 		$orderby      = 'name';  
 		$show_count   = 0;      
@@ -71,6 +71,7 @@ class Atr_Categories_Manager_Public {
 
 		$args = array(
 		'taxonomy'     => $taxonomy_t,
+		'post_type'	   => $post_type_t,
 		'orderby'      => $orderby,
 		'show_count'   => $show_count,
 		'pad_counts'   => $pad_counts,
@@ -105,14 +106,15 @@ class Atr_Categories_Manager_Public {
 		}
 		echo '<ul>';
 		echo '<li  data-jstree=\'{"opened":' . $uncollapse_all . '}\' class="atr-cm-sub_category" data-link="'. get_category_link( $cat->term_id ) .'"><a href="'. get_category_link( $cat->term_id ) .'">' . $cat->name . ' Cat id = <span class="atr-cm-sub1-cat-id atr-cm-sub-cat-id">(' . $cat->term_id. ') </span>suggested SKU:<span class="suggested-sku atr-cm-sub-sku">' . $suggested_sku . '</span>' .'</a> </span>';
-		//echo ' / <a href="' . get_category_link( $cat->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $cat->name ) . '" ' . '>View ( '. $cat->count . ' posts )</a>  '; 
-		//echo ' / <a href="'. get_admin_url().'edit-tags.php?action=edit&taxonomy=category&tag_ID='.$cat->term_id.'&post_type=post" title="Edit Category">Edit</a>'; 
-		$this->atr_cm_list( $cat->term_id, $suggested_sku, $taxonomy_t,$uncollapse_all );
+		echo ' / <a href="' . get_category_link( $cat->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $cat->name ) . '" ' . '>View ( '. $cat->count . ' posts )</a>  '; 
+		echo ' / <a href="'. get_admin_url().'term.php?taxonomy=' . $taxonomy_t . '&tag_ID='.$cat->term_id.'&post_type=' . $post_type_t . '" title="Edit Category">Edit</a>'; 
+		$this->atr_cm_list( $cat->term_id, $suggested_sku, $taxonomy_t, $post_type_t, $uncollapse_all );
 		echo '</li></ul>';
 		endforeach;    
 		endif;
 
-		
+		// term.php?taxonomy=category&tag_ID=5&post_type=post
+		// term.php?taxonomy=product_cat&tag_ID=30&post_type=product
 	}	
 
 	private function endsWith($haystack, $needle)
@@ -131,6 +133,7 @@ class Atr_Categories_Manager_Public {
 		$a = shortcode_atts( array(
 		
 		'taxonomy_t'			=> 'product_cat',
+		'post_type_t'			=> 'product',
 		'uncollapse_all'			=> 'true'
 		
 		), $atts );		
@@ -144,7 +147,7 @@ class Atr_Categories_Manager_Public {
 		<input type="button" value="Expand All" onclick="jQuery('.atr-cm-wrap').jstree('open_all');">	 
 		<?php
 		echo '<div class="atr-cm-wrap">';		
-		echo $this->atr_cm_list(0, '',$a['taxonomy_t'],$a['uncollapse_all']);
+		echo $this->atr_cm_list(0, '',$a['taxonomy_t'],$a['post_type_t'] ,$a['uncollapse_all']);
 		echo '</div>';
 		//return "foo = {$a['foo']}";
 	}

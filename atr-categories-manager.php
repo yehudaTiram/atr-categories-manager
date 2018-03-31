@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       ATR Categories Manager
  * Plugin URI:        http://atarimtr.com
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Tree view display of taxonomies (categories). Adds a string that combines all taxonomies IDs as a string in the format of xx-xx-xx-xx etc. Shortcode Usage: [atr_cm_tree taxonomy_t="product_cat" post_type_t=product uncollapse_all=true]
  * Version:           1.0.0
  * Author:            Yehuda Tiram
  * Author URI:        http://atarimtr.com

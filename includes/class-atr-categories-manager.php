@@ -121,6 +121,12 @@ class Atr_Categories_Manager {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-atr-categories-manager-public.php';
+		
+		/**
+		 * The class responsible for getting all plugin's settings data
+		 * side of the site.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-atr-categories-manager-settings.php';		
 
 		$this->loader = new Atr_Categories_Manager_Loader();
 
@@ -156,6 +162,10 @@ class Atr_Categories_Manager {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		
+		$plugin_settings = new Atr_Categories_Manager_Admin_Settings( $this->get_plugin_name(), $this->get_version() );	
+		$plugin_basename = $this->plugin_name . '/' . $this->plugin_name . '.php';
+		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_settings, 'add_action_links' );			
 
 	}
 

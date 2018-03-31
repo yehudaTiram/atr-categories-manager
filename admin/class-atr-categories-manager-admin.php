@@ -51,7 +51,7 @@ class Atr_Categories_Manager_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
+		$this->load_dependencies();	
 	}
 
 	/**
@@ -99,5 +99,27 @@ class Atr_Categories_Manager_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/atr-categories-manager-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
+
+	/**
+     * Load the required dependencies for the Admin facing functionality.
+     *
+     * Include the following files for admin:
+     *
+     * Registers the admin settings and page.
+     *
+     *
+     * @since    1.0.0
+     * @access   private
+     */
+    private function load_dependencies() {
+
+		/**
+		 * The class responsible for getting all plugin's settings data
+		 * side of the site.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-atr-categories-manager-settings.php';
+
+    }	
+	
 
 }

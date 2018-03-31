@@ -122,12 +122,6 @@ class Atr_Categories_Manager {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-atr-categories-manager-public.php';
 		
-		/**
-		 * The class responsible for getting all plugin's settings data
-		 * side of the site.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-atr-categories-manager-settings.php';		
-
 		$this->loader = new Atr_Categories_Manager_Loader();
 
 	}

@@ -1,4 +1,4 @@
-=== ATR Categories treesview ===
+=== ATR Categories treeview ===
 Contributors: yehudaTiram
 Donate link: http://atarimtr.com
 Tags: Wordpress, Woocommerce, SKU, categories

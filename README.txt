@@ -16,6 +16,8 @@ Dispaly collapsible treeview of taxonomies with a string that joins the taxonomi
 This shortcode is used to provide a short way of selecting a SKU (catalog number) for Woocommerce products based on their category IDS. 
 The string provided is a join of all the hierarchy of categories the product is set to.
 
+The treeview uses jsTree - v3.3.5 https://www.jstree.com/ with client side search
+
 You should use it in a private/protected post if you want to use it only for admins.
 
 == Usage: ==

@@ -12,7 +12,7 @@ Wordpress shortcode to display collapsible treeview list of taxonomies with a co
 
 == Description ==
 
-Dispaly collapsible treeview of taxonomies with a string that joins the taxonomies IDs in the same hierarchy in a format of xxx-xxx-xxx.
+Display collapsible treeview of taxonomies with a string that joins the taxonomies IDs in the same hierarchy in a format of xxx-xxx-xxx.
 This shortcode is used to provide a short way of selecting a SKU (catalog number) for Woocommerce products based on their category IDS. 
 The string provided is a join of all the hierarchy of categories the product is set to.
 

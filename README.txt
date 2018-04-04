@@ -17,3 +17,20 @@ This shortcode is used to provide a short way of selecting a SKU (catalog number
 The string provided is a join of all the hierarchy of categories the product is set to.
 
 You should use it in a private/protected post if you want to use it only for admins.
+
+== Usage: ==
+
+Write a shortcode in the format:
+
+[atr_cm_tree taxonomy_t="TAXONOMY_NAME" post_type_t=POST_TYPE uncollapse_all=TRUE]
+
+=== Examples: ===
+
+Display Woocommerce products categories:
+[atr_cm_tree taxonomy_t="product_cat" post_type_t=product uncollapse_all=true]
+
+Display deafult WP categories:
+[atr_cm_tree taxonomy_t="category" post_type_t=post uncollapse_all=true]
+
+Display custom post type (CPT). In this case I show a CPT taxonomy name "businesses_categories" in the post type "businesses" 
+[atr_cm_tree taxonomy_t="businesses_categories" post_type_t=businesses uncollapse_all=true]

@@ -140,8 +140,8 @@ class Atr_Categories_Manager_Public {
 		
 		?>
 		<form id="s">
-		  <input type="search" id="q" />
-		  <button type="submit">Search</button>
+		  <input class="atr-cm-list-search" type="search" id="q" />
+		  <button class="atr-cm-list-search-btn" type="submit">Search</button>
 		</form>
 		<input type="button" value="Collapse All" onclick="jQuery('.atr-cm-wrap').jstree('close_all');">
 		<input type="button" value="Expand All" onclick="jQuery('.atr-cm-wrap').jstree('open_all');">	 

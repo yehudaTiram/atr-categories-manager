@@ -84,39 +84,83 @@ class Atr_Categories_Manager_Public {
 		$next = get_categories( $args );
 
 		if( $next ) :    
-		foreach( $next as $cat ) :		
-		$this_cat_parent = (string)$cat->category_parent;
-		$last_parent_exist = strpos($suggested_sku, $this_cat_parent);
+			foreach( $next as $cat ) :		
+				$this_cat_parent = (string)$cat->category_parent;
+				$last_parent_exist = strpos($suggested_sku, $this_cat_parent);
+				// var_dump($suggested_sku);
+				// var_dump($this_cat_parent);
+				// var_dump($last_parent_exist);
+				if ( $cat->parent > 0 ) {
+					
+					if ( $this->endsWith($suggested_sku, $this_cat_parent) ) {
+						$suggested_sku .= '-' . $cat->term_id;
+					}
+					else{
+						$cat_id_legth = strlen( $this_cat_parent );					
+						$trim_to_this_cat_parent_idx = $last_parent_exist + $cat_id_legth;
+						$sub = substr($suggested_sku, 0, $trim_to_this_cat_parent_idx);	
+						$suggested_sku = $sub . '-' . $cat->term_id;	
+						$this->get_cat_last_sku($sub . '-', false);
+					}
+					
+				}
+				else{
+					$suggested_sku = $cat->term_id;
+					$this->get_cat_last_sku($suggested_sku, true);
+				}
 
-		if ( $cat->parent > 0 ) {
-			
-			if ( $this->endsWith($suggested_sku, $this_cat_parent) ) {
-				$suggested_sku .= '-' . $cat->term_id;
-			}
-			else{
-				$cat_id_legth = strlen( $this_cat_parent );					
-				$trim_to_this_cat_parent_idx = $last_parent_exist + $cat_id_legth;
-				$sub = substr($suggested_sku, 0, $trim_to_this_cat_parent_idx);	
-				$suggested_sku = $sub . '-' . $cat->term_id;	
-			}
-			
-		}
-		else{
-			$suggested_sku = $cat->term_id;
-		}
-		echo '<ul>';
-		echo '<li  data-jstree=\'{"opened":' . $uncollapse_all . '}\' class="atr-cm-sub_category" data-link="'. get_category_link( $cat->term_id ) .'"><a href="'. get_category_link( $cat->term_id ) .'">' . $cat->name . ' Cat id = <span class="atr-cm-sub1-cat-id atr-cm-sub-cat-id">(' . $cat->term_id. ') </span>suggested SKU:<span class="suggested-sku atr-cm-sub-sku">' . $suggested_sku . '</span>' .'</a> </span>';
-		echo ' / <a href="' . get_category_link( $cat->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $cat->name ) . '" ' . '>View ( '. $cat->count . ' posts )</a>  '; 
-		echo ' / <a href="'. get_admin_url().'term.php?taxonomy=' . $taxonomy_t . '&tag_ID='.$cat->term_id.'&post_type=' . $post_type_t . '" title="Edit Category">Edit</a>'; 
-		$this->atr_cm_list( $cat->term_id, $suggested_sku, $taxonomy_t, $post_type_t, $uncollapse_all );
-		echo '</li></ul>';
-		endforeach;    
+				echo '<ul>';
+				echo '<li  data-jstree=\'{"opened":' . $uncollapse_all . '}\' class="atr-cm-sub_category" data-link="'. get_category_link( $cat->term_id ) .'"><a href="'. get_category_link( $cat->term_id ) .'">' . $cat->name . ' Cat id = <span class="atr-cm-sub1-cat-id atr-cm-sub-cat-id">(' . $cat->term_id. ') </span>suggested SKU:<span class="suggested-sku atr-cm-sub-sku">' . $suggested_sku . '</span>' .'</a> </span>';
+				echo ' / <a href="' . get_category_link( $cat->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $cat->name ) . '" ' . '>View ( '. $cat->count . ' posts )</a>  '; 
+				echo ' / <a href="'. get_admin_url().'term.php?taxonomy=' . $taxonomy_t . '&tag_ID='.$cat->term_id.'&post_type=' . $post_type_t . '" title="Edit Category">Edit</a>'; 
+				$this->atr_cm_list( $cat->term_id, $suggested_sku, $taxonomy_t, $post_type_t, $uncollapse_all );
+				echo '</li></ul>';
+				
+			endforeach;    
 		endif;
-
-		// term.php?taxonomy=category&tag_ID=5&post_type=post
-		// term.php?taxonomy=product_cat&tag_ID=30&post_type=product
+		
 	}	
 
+	private function get_cat_last_sku($cat_base_sku, $has_no_parent)
+	{
+		$product = 'product';
+		$_stock = '_stock';
+		$_sku = '_sku';
+		if ( $has_no_parent ){var_dump($has_no_parent);
+			$cat_base_sku = '%' . $cat_base_sku;
+		}
+		else{
+			$cat_base_sku = $cat_base_sku . '%';
+		}
+		
+		global $wpdb;
+		
+		$postids=$wpdb->get_col( $wpdb->prepare( 
+		"SELECT p.id, mt.meta_value AS sku FROM wp_posts p
+		INNER JOIN wp_postmeta m ON (
+			 p.id = m.post_id
+		)
+		INNER JOIN wp_postmeta mt ON (
+			 p.id = mt.post_id
+		)
+
+		WHERE
+		 p.post_type = %s
+		AND
+		 m.meta_key = %s
+		AND
+		 mt.meta_key = %s
+		 AND mt.meta_value like %s",
+		 
+		$product,
+		$_stock,
+		$_sku,
+		$cat_base_sku
+		) ); 
+
+		var_dump($postids);
+	}	
+	
 	private function endsWith($haystack, $needle)
 	{
 		$length = strlen($needle);

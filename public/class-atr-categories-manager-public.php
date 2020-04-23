@@ -81,11 +81,12 @@ class Atr_Categories_Manager_Public {
 		'parent'		=> $cat_parent
 		);
 
-		$next = get_categories( $args );
+		$next = get_terms( $args );
 
 		if( $next ) :    
-			foreach( $next as $cat ) :		
-				$this_cat_parent = (string)$cat->category_parent;
+			foreach( $next as $cat ) :	
+				//var_dump($cat);	
+				$this_cat_parent = (string)$cat->parent;
 				$last_parent_exist = strpos($suggested_sku, $this_cat_parent);
 				// var_dump($suggested_sku);
 				// var_dump($this_cat_parent);
@@ -109,12 +110,29 @@ class Atr_Categories_Manager_Public {
 					$this->get_cat_last_sku($suggested_sku, true);
 				}
 
-				echo '<ul>';
-				echo '<li  data-jstree=\'{"opened":' . $uncollapse_all . '}\' class="atr-cm-sub_category" data-link="'. get_category_link( $cat->term_id ) .'"><a href="'. get_category_link( $cat->term_id ) .'">' . $cat->name . ' Cat id = <span class="atr-cm-sub1-cat-id atr-cm-sub-cat-id">(' . $cat->term_id. ') </span>suggested SKU:<span class="suggested-sku atr-cm-sub-sku">' . $suggested_sku . '</span>' .'</a> </span>';
-				echo ' / <a href="' . get_category_link( $cat->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $cat->name ) . '" ' . '>View ( '. $cat->count . ' posts )</a>  '; 
-				echo ' / <a href="'. get_admin_url().'term.php?taxonomy=' . $taxonomy_t . '&tag_ID='.$cat->term_id.'&post_type=' . $post_type_t . '" title="Edit Category">Edit</a>'; 
-				$this->atr_cm_list( $cat->term_id, $suggested_sku, $taxonomy_t, $post_type_t, $uncollapse_all );
-				echo '</li></ul>';
+				ob_start();
+				?>
+				<ul>
+					<li data-jstree='{"opened": <?php echo $uncollapse_all ?>}' class="atr-cm-sub_category" data-link="<?php echo get_category_link( $cat->term_id ) ?>">
+						<a href="<?php echo get_category_link( $cat->term_id ); ?>" 
+						taxonomy="<?php echo $taxonomy_t; ?>" 
+						tag_ID="<?php echo $cat->term_id; ?>" 
+						post_type="<?php echo $post_type_t; ?>" >
+							<span style="padding: 0 10px;" class="atr-cm-cat-name"><?php echo $cat->name; ?></span> Cat id = <span style="padding: 0 10px;" class="atr-cm-sub1-cat-id atr-cm-sub-cat-id">(<?php echo $cat->term_id; ?>) </span>suggested SKU:<span style="padding: 0 10px;" class="suggested-sku atr-cm-sub-sku"><?php echo $suggested_sku ?></span><span style="padding: 0 10px;" class="atr-cm-count">Count: <?php echo $cat->count; ?></span>
+						</a>
+						<?php $this->atr_cm_list( $cat->term_id, $suggested_sku, $taxonomy_t, $post_type_t, $uncollapse_all ); ?>		
+					</li>
+				</ul>
+				<?php
+				ob_end_flush();				
+
+				// echo '<ul>';
+				// echo '<li data-jstree=\'{"opened":' . $uncollapse_all . '}\' class="atr-cm-sub_category" data-link="'. get_category_link( $cat->term_id ) .'">';
+				// echo '<a href="'. get_category_link( $cat->term_id ) .'">' . $cat->name . ' Cat id = <span class="atr-cm-sub1-cat-id atr-cm-sub-cat-id">(' . $cat->term_id. ') </span>suggested SKU:<span class="suggested-sku atr-cm-sub-sku">' . $suggested_sku . '</span>' .'</a> </span>';
+				// echo ' / <a href="' . get_category_link( $cat->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $cat->name ) . '" ' . '>View ( '. $cat->count . ' posts )</a>  '; 
+				// echo ' / <a href="'. get_admin_url().'term.php?taxonomy=' . $taxonomy_t . '&tag_ID='.$cat->term_id.'&post_type=' . $post_type_t . '" title="Edit Category">Edit</a>'; 
+				// $this->atr_cm_list( $cat->term_id, $suggested_sku, $taxonomy_t, $post_type_t, $uncollapse_all );
+				// echo '</li></ul>';
 				
 			endforeach;    
 		endif;
@@ -126,7 +144,7 @@ class Atr_Categories_Manager_Public {
 		$product = 'product';
 		$_stock = '_stock';
 		$_sku = '_sku';
-		if ( $has_no_parent ){var_dump($has_no_parent);
+		if ( $has_no_parent ){ 
 			$cat_base_sku = '%' . $cat_base_sku;
 		}
 		else{
@@ -157,8 +175,6 @@ class Atr_Categories_Manager_Public {
 		$_sku,
 		$cat_base_sku
 		) ); 
-
-		var_dump($postids);
 	}	
 	
 	private function endsWith($haystack, $needle)
@@ -228,8 +244,8 @@ class Atr_Categories_Manager_Public {
 		* class.
 		*/
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/atr-categories-manager-public.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( $this->plugin_name . 'jstree_js', '//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/atr-categories-manager-public.js', array( 'jquery' ), rand(1, 1000), false );
+		wp_enqueue_script( $this->plugin_name . 'jstree_js', '//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js', array( 'jquery' ), rand(1, 1000), false );
 
 	}
 

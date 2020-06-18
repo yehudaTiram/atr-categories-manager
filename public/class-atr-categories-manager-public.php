@@ -109,7 +109,11 @@ class Atr_Categories_Manager_Public {
 					$suggested_sku = $cat->term_id;
 					$this->get_cat_last_sku($suggested_sku, true);
 				}
-
+		 /**
+         * Avoid wp_ob_end_flush_all bug when zlib.output_compression = On
+         * https://core.trac.wordpress.org/ticket/22430
+         */
+        remove_action('shutdown', 'wp_ob_end_flush_all', 1);
 				ob_start();
 				?>
 				<ul>
